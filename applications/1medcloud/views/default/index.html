@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="{{=URL('static','css','index.css')}}" rel="stylesheet"
+<link href="index.css" rel="stylesheet" />
+<script src="signinsignup.js"></script>
 <title>Untitled Document</title>
 </head>
 
@@ -10,24 +11,26 @@
 <div id="content">
 <h1>Welcome</h1>
 <div id="signin">
-<form action="http://www.1medcloud.com/init/default/mobile_user_login" method="post">
+<h2>Sign In</h2>
+<form name="patientsignin" action="http://www.1medcloud.com/init/default/mobile_user_login" method="post">
 <table>
 <tr><td><input class="inputtext" type="email" name="email" placeholder="Email"/></td></tr>
 <tr><td><input class="inputtext" type="password" name="password" placeholder="Password"/></td></tr>
-<tr><td><input class="signinbutton" type="submit" name="signin" value="Sign In" /></td></tr>
+<tr><td><button onClick="psignin()">Sign In</button></td></tr>
 </table>
 </form>
 </div>
 <div id="signup">
-<form action="http://www.1medcloud.com/init/default/mobile_user_register" method="post">
+<h2>Join today!</h2>
+<form name="patientsignup" action="http://www.1medcloud.com/init/default/mobile_user_register" method="post">
 <table>
-<tr><td><input class="inputtext" name="firstname" value="First Name" /></td></tr>
-<tr><td><input class="inputtext" name="lastname" value="Last Name" /></td></tr>
-<tr><td><input class="inputtext" name="email" value="Enter your Email" /></td></tr>
-<tr><td><input class="inputtext" name="username" value="Username" /></td></tr>
-<tr><td><input class="inputtext" name="password" value="Password" /></td></tr>
-<tr><td><input class="inputtext" name="repeatpassword" value="Repeat Your Password" /></td></tr>
-<tr><td><input type="submit" name="signup" value="Sign Up" /></td></tr>
+<tr><td><input class="inputtext" type="email" name="email" placeholder="Enter your Email" /></td></tr>
+<tr><td><input class="inputtext" type="password" name="password" placeholder="Password" /></td></tr>
+<tr><td><input class="inputtext" type="password" name="repeatpassword" placeholder="Repeat Your Password" /></td></tr>
+<tr><td><input class="inputtext" name="firstname" placeholder="First Name" /></td></tr>
+<tr><td><input class="inputtext" name="username" placeholder="Middle Initial" /></td></tr>
+<tr><td><input class="inputtext" name="lastname" placeholder="Last Name" /></td></tr>
+<tr><td><button onClick="psignup()">Sign Up</button></td></tr>
 </table>
 </form>
 </div>
