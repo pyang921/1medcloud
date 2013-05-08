@@ -11,7 +11,7 @@
 import gluon.utils as TT
 
 def index():
-    return dict()
+     return dict()
 
 def user():
     """
@@ -46,13 +46,14 @@ def call():
     """
     return service()
 
-def mobile_user_register():
+def mobile_patient_register():
     email = request.vars.email
     password = request.vars.password
     firstname = request.vars.firstname
+    middlename = request.vars.middlename
     lastname = request.vars.lastname
     country = request.vars.country
-    rows = db(db.mobile_user.email==email).select()
+    rows = db(db.patient.email==email).select()
     result = {}
     
     if len(rows) != 0:
@@ -60,7 +61,33 @@ def mobile_user_register():
         return response.json(result)
     
     return_result = TT.md5_hash(password)
-    ret = db.mobile_user.validate_and_insert(email=email, password=password, first_name=firstname, last_name=lastname, md5=return_result, country=country)
+    ret = db.patient.validate_and_insert(email=email, password=password, first_name=firstname, middle_name=middlename, last_name=lastname, md5=return_result, country=country)
+
+    if ret.errors:
+        result['status'] = "ERROR"
+        return response.json(result)        
+    else:
+        result['status'] = "success"
+        result['result'] = return_result   
+        return response.json(result)
+
+    
+def mobile_prof_register():
+    email = request.vars.email
+    password = request.vars.password
+    firstname = request.vars.firstname
+    middlename = request.vars.middlename
+    lastname = request.vars.lastname
+    country = request.vars.country
+    rows = db(db.prof.email==email).select()
+    result = {}
+    
+    if len(rows) != 0:
+        result['status'] = "exist"
+        return response.json(result)
+    
+    return_result = TT.md5_hash(password)
+    ret = db.prof.validate_and_insert(email=email, password=password, first_name=firstname, middle_name=middlename, last_name=lastname, md5=return_result, country=country)
 
     if ret.errors:
         result['status'] = "ERROR"
@@ -70,13 +97,23 @@ def mobile_user_register():
         result['result'] = return_result   
         return response.json(result)
     
-#@service.jsonrpc
-def mobile_user_login(email, password):
-    rows = db(db.mobile_user.email==email).select()
+def mobile_patient_login():
+    email=request.vars.email
+    password=request.vars.password
+    rows = db(db.patient.email==email).select()
     if len(rows) != 1:
-        return {'status': 'ERROR'}
+        return response.json({'status': 'ERROR'})
     user = rows[0]
-    return {'status':'success', 'result': user.md5}
+    return response.json({'status':'success', 'result': user.md5})
+
+def mobile_prof_login():
+    email=request.vars.email
+    password=request.vars.password
+    rows = db(db.prof.email==email).select()
+    if len(rows) != 1:
+        return response.json({'status': 'ERROR'})
+    user = rows[0]
+    return response.json({'status':'success', 'result': user.md5})
 
 @auth.requires_signature()
 def data():
