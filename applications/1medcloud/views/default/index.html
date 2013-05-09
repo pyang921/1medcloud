@@ -12,27 +12,48 @@
 <h1>Welcome</h1>
 <div id="signin">
 <h2>Sign In</h2>
-<p id="signinfielderror" style="display:none">Please enter your email and password</p>
-<p id="signincomboerror" style="display:none">The email/password combination is incorrect</p>
-<form name="patientsignin" action="mobile_user_login" method="post">
+<p id="signinerror"></p>
+<form name="patientsignin">
 <table>
 <tr><td><input class="inputtext" type="email" name="email" placeholder="Email"/></td></tr>
 <tr><td><input class="inputtext" type="password" name="password" placeholder="Password"/></td></tr>
-<tr><td><input type="button" value="Sign In" id="psignin"/><script type="text/javascript">$('#psignin').on("click", function(){ document.getElementById(patientsignin).submit(); alert($("#patientsignin").serialize());});</script></td></tr>
+<tr><td><a href="forgot">Forgot password?</a></td></tr>
+<tr><td><input type="button" value="Sign In" id="psignin"/><script type="text/javascript">$("#psignin").on("click",function() {
+    $.ajax({
+           type: "POST",
+           url: "mobile_patient_login",
+           data: $("#patientsignin").serialize(), // serializes the form's elements.
+           success: function(response)
+           {
+			   result=JSON.parse(response)
+               //alert(result.status);
+			   var status=result['status'];
+			   if (status=="success") {
+				    window.location="user";
+			   }
+			   if (status=="ERROR") {
+				   document.getElementById('signinerror').innerHTML="Incorrect email/password";
+			   }
+           }
+         });
+
+    return false; // avoid to execute the actual submit of the form.
+});</script></td></tr>
 </table>
 </form>
 </div>
 <div id="signup">
 <h2>Join today!</h2>
-<p><b id="signuperror"></b></p>
+<p id="signuperror"></p>
 <form id="patientsignup">
 <table>
 <tr><td><input class="inputtext" type="email" name="email" placeholder="Enter your Email" /></td></tr>
 <tr><td><input class="inputtext" type="password" name="password" placeholder="Password" /></td></tr>
 <tr><td><input class="inputtext" type="password" name="repeatpassword" placeholder="Repeat Your Password" /></td></tr>
 <tr><td><input class="inputtext" name="firstname" placeholder="First Name" /></td></tr>
-<tr><td><input class="inputtext" name="username" placeholder="Middle Initial" /></td></tr>
+<tr><td><input class="inputtext" name="middlename" placeholder="Middle Initial" /></td></tr>
 <tr><td><input class="inputtext" name="lastname" placeholder="Last Name" /></td></tr>
+<tr><td><p id="terms">By clicking to Sign Up, you agree to your <a href="terms">Terms</a> and <a href="policy">Data Use Policy</a>.</p></td></tr>
 <tr><td><button id="psignup">Sign Up</button></td></tr>
 <script type="text/javascript">$("#psignup").on("click",function() {
     $.ajax({
