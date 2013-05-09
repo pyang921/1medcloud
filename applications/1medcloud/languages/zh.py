@@ -142,6 +142,7 @@
 'Main Menu': '主選單',
 'Manage Cache': 'Manage Cache',
 'Menu Model': '選單模組(menu)',
+'Middle name': 'Middle name',
 'Models': '資料模組',
 'Modified By': 'Modified By',
 'Modified On': 'Modified On',

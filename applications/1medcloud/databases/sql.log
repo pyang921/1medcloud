@@ -65,3 +65,39 @@ CREATE TABLE mobile_user(
     country CHAR(15)
 );
 success!
+timestamp: 2013-05-06T21:47:06.630066
+CREATE TABLE patient(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(128) UNIQUE,
+    password CHAR(512),
+    first_name CHAR(128),
+    middle_name CHAR(128),
+    last_name CHAR(128),
+    md5 CHAR(128),
+    country CHAR(15)
+);
+success!
+timestamp: 2013-05-06T21:47:06.639949
+CREATE TABLE doctor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(128) UNIQUE,
+    password CHAR(512),
+    first_name CHAR(128),
+    middle_name CHAR(128),
+    last_name CHAR(128),
+    md5 CHAR(128),
+    country CHAR(15)
+);
+success!
+timestamp: 2013-05-06T21:51:43.356923
+CREATE TABLE prof(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(128) UNIQUE,
+    password CHAR(512),
+    first_name CHAR(128),
+    middle_name CHAR(128),
+    last_name CHAR(128),
+    md5 CHAR(128),
+    country CHAR(15)
+);
+success!

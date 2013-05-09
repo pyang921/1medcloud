@@ -11,7 +11,7 @@
 import gluon.utils as TT
 
 def index():
-     return dict()
+    return dict()
 
 def user():
     """
