@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="patientportal.css" rel="stylesheet" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<title>Untitled Document</title>
+</head>
+
+<body>
+<div id="content">
+<h1>Welcome</h1>
+<div id="signin">
+<h2>Sign In</h2>
+<span id="signinerror">&nbsp;</span>
+<form id="patientsignin">
+<table>
+<tr><td><input class="inputtext" type="email" name="email" placeholder="Email"/></td></tr>
+<tr><td><input class="inputtext" type="password" name="password" placeholder="Password"/></td></tr>
+<tr><td><a href="forgot">Forgot password?</a></td></tr>
+<tr><td><input type="button" value="Sign In" id="psignin"/><script type="text/javascript">$("#psignin").on("click",function() {
+	var x=document.forms["patientsignin"]["email"].value;
+	var y=document.forms["patientsignin"]["password"].value;
+	if (x!=""&&x!=null&&y!=""&&y!=null){
+    $.ajax({
+           type: "POST",
+           url: "mobile_patient_login",
+           data: $("#patientsignin").serialize(), // serializes the form's elements.
+           success: function(response)
+           {
+			   result=JSON.parse(response)
+			   var status=result['status'];
+			   if (status=="success") {
+					window.location="user";
+			   }
+			   if (status=="ERROR") {
+				   document.getElementById('signinerror').innerHTML="Incorrect email/password";
+			   }
+           }
+         });
+
+    return false; // avoid to execute the actual submit of the form.
+	}
+	else {
+		document.getElementById('signinerror').innerHTML="Please enter your email and password";
+	};
+});</script></td></tr>
+</table>
+</form>
+</div>
+<div id="signup">
+<h2>Join today!</h2>
+<span id="signuperror">&nbsp;</span>
+<form name="patientsignup" id="patientsignup">
+<table>
+<tr><td><input class="inputtext" type="text" name="email" placeholder="Enter your Email" /></td></tr>
+<tr><td><input class="inputtext" type="password" name="password" placeholder="Password" /></td></tr>
+<tr><td><input class="inputtext" type="password" name="repeatpassword" placeholder="Repeat Your Password" /></td></tr>
+<tr><td><input class="inputtext" name="firstname" placeholder="First Name" /></td></tr>
+<tr><td><input class="inputtext" name="middlename" placeholder="Middle Initial" /></td></tr>
+<tr><td><input class="inputtext" name="lastname" placeholder="Last Name" /></td></tr>
+<tr><td><span id="terms">By clicking to Sign Up, you agree to your <a href="terms">Terms</a> and <a href="policy">Data Use Policy</a>.</span></td></tr>
+<tr><td><input type="button" id="psignup"value="Sign Up" onClick="ValidateEmail(document.patientsignup.email)"/></td></tr>
+<script type="text/javascript">function ValidateEmail(inputText) {
+	var a=document.forms["patientsignup"]["email"].value;
+	var b=document.forms["patientsignup"]["password"].value;
+	var c=document.forms["patientsignup"]["repeatpassword"].value;
+	var d=document.forms["patientsignup"]["firstname"].value;
+	var e=document.forms["patientsignup"]["lastname"].value;
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if (a==""||b==""||c==""||d==""||e==""){
+		document.getElementById("signuperror").innerHTML="Please enter all required fields.";
+		return false;
+	}
+	else if (b!=c&&b!=""&&c!=""){
+		document.getElementById("signuperror").innerHTML="Your passwords do not match.";
+		return false;
+	}  
+	else if (inputText.value.match(mailformat)){
+    $.ajax({
+           type: "POST",
+           url: "mobile_patient_register",
+           data: $("#patientsignup").serialize(), // serializes the form's elements.
+           success: function(response)
+           {
+			   result=JSON.parse(response)
+               //alert(result.status);
+			   var status=result['status'];
+			   if (status=="success") {
+				    window.location="profile";
+			   }
+			   if (status=="exist") {
+				   document.getElementById('signuperror').innerHTML="That email has been registered.";
+			   }
+           }
+         });
+    return false;
+	}
+else  {  
+document.getElementById("signuperror").innerHTML="You have entered an invalid email address!"; 
+return false;  }   
+};</script>
+</table>
+</form>
+</div>
+</div>
+</body>
+</html>

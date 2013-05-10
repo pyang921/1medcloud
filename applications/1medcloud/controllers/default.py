@@ -13,6 +13,9 @@ import gluon.utils as TT
 def index():
     return dict()
 
+def patientportal():
+    return dict()
+
 def user():
     """
     exposes:

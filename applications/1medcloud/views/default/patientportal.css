@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/* CSS Document */
+
+h1 {
+	color:green;
+}
+
+#content {
+	position:absolute; top:50px; left:20%;
+}
